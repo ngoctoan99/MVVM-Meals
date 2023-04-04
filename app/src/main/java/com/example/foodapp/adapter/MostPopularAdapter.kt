@@ -1,5 +1,6 @@
 package com.example.foodapp.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,6 +11,7 @@ import com.example.foodapp.model.MealByCategory
 class MostPopularAdapter(): RecyclerView.Adapter<MostPopularAdapter.PopularMealViewHolder>() {
     lateinit var onItemClick:((MealByCategory)->Unit)
     private var mealList = ArrayList<MealByCategory>()
+    @SuppressLint("NotifyDataSetChanged")
     fun setMeals(mealList:ArrayList<MealByCategory>){
         this.mealList = mealList
         notifyDataSetChanged()

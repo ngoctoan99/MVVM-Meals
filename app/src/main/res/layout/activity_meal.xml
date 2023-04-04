@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             app:title="Meal Name"
             app:contentScrim="@color/accent"
-            app:layout_scrollFlags="scroll||snap||exitUntilCollapsed"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
             android:layout_height="match_parent">
             <ImageView
                 android:layout_width="match_parent"
@@ -40,7 +40,7 @@
         app:backgroundTint="@color/accent"
         app:tint= "@color/white"
         app:layout_anchor="@id/appbar"
-        app:layout_anchorGravity="bottom||end"
+        app:layout_anchorGravity="bottom|end"
         android:layout_marginEnd="@dimen/_10sdp"/>
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -115,7 +115,7 @@
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:src="@drawable/ic_baseline_ondemand_video_24"
-        android:layout_gravity="bottom||center"
+        android:layout_gravity="bottom|center"
         android:layout_marginBottom="@dimen/_10sdp"/>
 
     <com.google.android.material.progressindicator.LinearProgressIndicator

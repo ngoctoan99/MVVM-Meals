@@ -10,6 +10,7 @@ import com.example.foodapp.model.CategoryList
 
 class CategoryAdapter():RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
     private var categoryList = ArrayList<Category>()
+    var onItemClick : ((Category) -> Unit)? = null
     inner class CategoryViewHolder( var binding : CategoryItemBinding):RecyclerView.ViewHolder(binding.root)
     fun setCategoryList(categoryList: List<Category>){
         this.categoryList = categoryList as ArrayList<Category>
@@ -22,6 +23,9 @@ class CategoryAdapter():RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         Glide.with(holder.itemView).load(categoryList[position].strCategoryThumb).into(holder.binding.imgCategory)
         holder.binding.tvCategoryName.text = categoryList[position].strCategory
+        holder.itemView.setOnClickListener {
+            onItemClick!!.invoke(categoryList[position])
+        }
     }
 
     override fun getItemCount(): Int {

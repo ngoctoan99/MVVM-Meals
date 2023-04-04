@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.foodapp.activity.CategoryMealActivity
+import com.example.foodapp.activity.MainActivity
 import com.example.foodapp.adapter.MostPopularAdapter
 import com.example.foodapp.activity.MealActivity
 import com.example.foodapp.adapter.CategoryAdapter
@@ -21,7 +22,7 @@ import com.example.foodapp.viewmodel.HomeViewModel
 
 class HomeFragment : Fragment() {
     private lateinit var binding : FragmentHomeBinding
-    private lateinit var homeViewModel : HomeViewModel
+    private lateinit var viewModel : HomeViewModel
     private lateinit var randomMeal : Meal
     private lateinit var popularItemAdapter: MostPopularAdapter
     private lateinit var categoryAdapter : CategoryAdapter
@@ -29,10 +30,13 @@ class HomeFragment : Fragment() {
         const val MEAL_ID = "com.example.foodapp.fragment.idMeal"
         const val MEAL_NAME = "com.example.foodapp.fragment.nameMeal"
         const val MEAL_THUMB = "com.example.foodapp.fragment.thumbMeal"
+        const val CATEGORY_NAME = "com.example.foodapp.fragment.categoryName"
+        const val SAVE = "com.example.foodapp.fragment.save"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        homeViewModel = ViewModelProviders.of(this)[HomeViewModel::class.java]
+//        homeViewModel = ViewModelProviders.of(this)[HomeViewModel::class.java]
+        viewModel = (activity as MainActivity).viewModel
         popularItemAdapter = MostPopularAdapter()
         categoryAdapter = CategoryAdapter()
     }
@@ -48,19 +52,29 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         preparePopularItemRecyclerView()
 
-        homeViewModel.getRandomMeal()
+        viewModel.getRandomMeal()
         observerRandomMeal()
         onRanDomMealClick()
 
-        homeViewModel.getPopularItems()
+        viewModel.getPopularItems()
         observerPopularItemsLiveData()
         onPopularItemClick()
 
         prepareCategoriesRecyclerView()
-        homeViewModel.getCategories()
+        viewModel.getCategories()
         observerCategoryLiveData()
+        onCategoryClick()
 
 
+
+    }
+
+    private fun onCategoryClick() {
+        categoryAdapter.onItemClick = { category ->  
+            val intent = Intent(activity,CategoryMealActivity::class.java)
+            intent.putExtra(CATEGORY_NAME,category.strCategory)
+            startActivity(intent)
+        }
     }
 
     private fun prepareCategoriesRecyclerView() {
@@ -71,7 +85,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observerCategoryLiveData() {
-        homeViewModel.observerCategoryLIveData().observe(viewLifecycleOwner) { categoryList->
+        viewModel.observerCategoryLIveData().observe(viewLifecycleOwner) { categoryList->
                categoryAdapter.setCategoryList(categoryList)
         }
     }
@@ -82,6 +96,7 @@ class HomeFragment : Fragment() {
             intent.putExtra(MEAL_ID,meal.idMeal)
             intent.putExtra(MEAL_NAME,meal.strMeal)
             intent.putExtra(MEAL_THUMB,meal.strMealThumb)
+            startActivity(intent)
         }
     }
 
@@ -93,7 +108,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observerPopularItemsLiveData() {
-        homeViewModel.observerPopularItemLiveData().observe(viewLifecycleOwner
+        viewModel.observerPopularItemLiveData().observe(viewLifecycleOwner
         ) { mealList ->
             popularItemAdapter.setMeals(mealList = mealList as ArrayList<MealByCategory> )
         }
@@ -110,7 +125,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun observerRandomMeal(){
-        homeViewModel.observerRandomMealLiveData().observe(viewLifecycleOwner) { meal ->
+        viewModel.observerRandomMealLiveData().observe(viewLifecycleOwner) { meal ->
             Glide.with(this@HomeFragment)
                 .load(meal!!.strMealThumb)
                 .into(binding.imgRandomMeal)
