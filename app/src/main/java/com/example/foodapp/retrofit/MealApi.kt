@@ -1,9 +1,6 @@
 package com.example.foodapp.retrofit
 
-import com.example.foodapp.model.CategoryList
-import com.example.foodapp.model.MealByCategory
-import com.example.foodapp.model.MealByCategoryList
-import com.example.foodapp.model.MealList
+import com.example.foodapp.model.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
@@ -23,4 +20,15 @@ interface MealApi {
 
     @GET("filter.php")
     fun getMealsByCategory(@Query("c")categoryName : String):Call<MealByCategoryList>
+
+    @GET("search.php?")
+    fun searchMealByName(@Query("s") mealName: String):Call<MealList>
+
+    @GET("list.php?a=list")
+    fun getAllArea():Call<ListCountry>
+
+    @GET("filter.php")
+    fun getMealByArea(@Query("a") countryName:String):Call<MealByCategoryList>
+
+
 }

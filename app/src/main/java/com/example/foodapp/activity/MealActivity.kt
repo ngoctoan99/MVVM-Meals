@@ -1,13 +1,12 @@
 package com.example.foodapp.activity
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.foodapp.R
@@ -59,19 +58,17 @@ class MealActivity : AppCompatActivity() {
         }
     }
     private var mealToSave:Meal?=null
+    @SuppressLint("SetTextI18n")
     private fun observerMealDetailLiveData() {
-        mealViewModel.observerMealDetailLiveData().observe(this,object :Observer<Meal>{
-            override fun onChanged(t: Meal?) {
-                onResponseCase()
-               val meal = t
-                mealToSave = meal
-                binding.tvCategory.text = "Category : ${meal!!.strCategory}"
-                binding.tvArea.text = "Area : ${meal!!.strArea}"
-                binding.tvDescription.text = meal.strInstructions
-                youtubeLink = meal.strYoutube.toString()
-            }
-
-        })
+        mealViewModel.observerMealDetailLiveData().observe(this
+        ) { t ->
+            onResponseCase()
+            mealToSave = t
+            binding.tvCategory.text = "Category : ${t!!.strCategory}"
+            binding.tvArea.text = "Area : ${t.strArea}"
+            binding.tvDescription.text = t.strInstructions
+            youtubeLink = t.strYoutube.toString()
+        }
     }
 
     private fun setInformationInViews() {

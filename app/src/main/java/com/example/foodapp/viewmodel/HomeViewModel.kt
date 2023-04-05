@@ -19,15 +19,24 @@ class HomeViewModel(
     private var randomMealLiveData = MutableLiveData<Meal>()
     private var popularItemLiveData = MutableLiveData<List<MealByCategory>>()
     private var categoryLiveData = MutableLiveData<List<Category>>()
+    private var countryLiveData = MutableLiveData<List<Country>>()
+    private var bottomSheetMealLiveData = MutableLiveData<Meal>()
+    private var searchMealLiveData = MutableLiveData<List<Meal>>()
     private var favoriteMealLIveData = mealDatabase.mealDao().getAllMeal()
+    private var saveSateRandomMeal : Meal ?= null
     fun getRandomMeal(){
+        saveSateRandomMeal?.let {
+            randomMealLiveData.postValue(it)
+            return
+        }
         RetrofitInstance.api.getRandomMeal().enqueue(object : Callback<MealList> {
             override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
                 if(response.body() != null){
                     val randomMeal : Meal = response.body()!!.meals[0]
                     randomMealLiveData.value = randomMeal
+                    saveSateRandomMeal = randomMeal
                 }else {
-
+                    return
                 }
             }
             override fun onFailure(call: Call<MealList>, t: Throwable) {
@@ -35,7 +44,6 @@ class HomeViewModel(
             }
         })
     }
-
     fun getPopularItems(){
         RetrofitInstance.api.getPopularItems("Seafood").enqueue(object :Callback<MealByCategoryList>{
             override fun onResponse(call: Call<MealByCategoryList>, response: Response<MealByCategoryList>) {
@@ -70,20 +78,51 @@ class HomeViewModel(
 
         })
     }
+    fun searchMeal(searchQuery: String) = RetrofitInstance.api.searchMealByName(searchQuery).enqueue(object :Callback<MealList>{
+        override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
+            val mealList = response.body()?.meals
+            mealList?.let {
+                searchMealLiveData.postValue(it)
+            }
+        }
+        override fun onFailure(call: Call<MealList>, t: Throwable) {
+            Log.e("toandatasearch",t.message.toString())
+        }
+    })
+    fun getCountry(){
+        RetrofitInstance.api.getAllArea().enqueue(object: Callback<ListCountry>{
+            override fun onResponse(call: Call<ListCountry>, response: Response<ListCountry>) {
+                if(response.body() != null){
+                    response.body()?.let { countryList ->
+                        countryLiveData.postValue(countryList.meals)
+                    }
+                }else {
+
+                }
+            }
+
+            override fun onFailure(call: Call<ListCountry>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    fun observerCountryLiveData():LiveData<List<Country>> = countryLiveData
+    fun observerSearchMealLiveData():LiveData<List<Meal>> = searchMealLiveData
     fun observerRandomMealLiveData():LiveData<Meal>{
         return randomMealLiveData
     }
     fun observerPopularItemLiveData():LiveData<List<MealByCategory>>{
         return popularItemLiveData
     }
-
     fun observerCategoryLIveData():LiveData<List<Category>>{
         return categoryLiveData
     }
-
     fun observeFavoritesMealsLiveData():LiveData<List<Meal>>{
         return favoriteMealLIveData
     }
+
     fun deleteMeal(meal:Meal){
         viewModelScope.launch {
             mealDatabase.mealDao().delete(meal)
@@ -94,4 +133,21 @@ class HomeViewModel(
             mealDatabase.mealDao().upsert(meal)
         }
     }
+    fun getMealById(id : String){
+        RetrofitInstance.api.getMealDetail(id).enqueue(object :Callback<MealList>{
+            override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
+                val meal = response.body()?.meals?.first()
+                meal?.let {
+                    bottomSheetMealLiveData.postValue(it)
+                }
+            }
+
+            override fun onFailure(call: Call<MealList>, t: Throwable) {
+                Log.e("toandata",t.message.toString())
+            }
+
+        })
+    }
+
+    fun observeBottomSheetMeal():LiveData<Meal> = bottomSheetMealLiveData
 }

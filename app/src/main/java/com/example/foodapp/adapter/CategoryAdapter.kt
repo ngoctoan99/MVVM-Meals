@@ -1,5 +1,6 @@
 package com.example.foodapp.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ class CategoryAdapter():RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>
     private var categoryList = ArrayList<Category>()
     var onItemClick : ((Category) -> Unit)? = null
     inner class CategoryViewHolder( var binding : CategoryItemBinding):RecyclerView.ViewHolder(binding.root)
+    @SuppressLint("NotifyDataSetChanged")
     fun setCategoryList(categoryList: List<Category>){
         this.categoryList = categoryList as ArrayList<Category>
         notifyDataSetChanged()

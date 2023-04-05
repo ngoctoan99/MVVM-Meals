@@ -16,17 +16,20 @@
             android:id="@+id/img_meal"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_145sdp"
+            android:layout_margin="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:src="@color/accent"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_meal_name"
             android:textSize="@dimen/_15sdp"
             android:textColor="@color/black"
+            android:padding="5dp"
+            android:textAlignment="center"
             app:layout_constraintStart_toStartOf="@id/img_meal"
             app:layout_constraintEnd_toEndOf="@id/img_meal"
             app:layout_constraintTop_toBottomOf="@id/img_meal"

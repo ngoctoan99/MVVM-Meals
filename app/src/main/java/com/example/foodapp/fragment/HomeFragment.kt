@@ -6,9 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.foodapp.R
 import com.example.foodapp.activity.CategoryMealActivity
 import com.example.foodapp.activity.MainActivity
 import com.example.foodapp.adapter.MostPopularAdapter
@@ -31,6 +33,7 @@ class HomeFragment : Fragment() {
         const val MEAL_NAME = "com.example.foodapp.fragment.nameMeal"
         const val MEAL_THUMB = "com.example.foodapp.fragment.thumbMeal"
         const val CATEGORY_NAME = "com.example.foodapp.fragment.categoryName"
+        const val COUNTRY_NAME = "om.example.foodapp.fragment.countryName"
         const val SAVE = "com.example.foodapp.fragment.save"
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,6 +62,7 @@ class HomeFragment : Fragment() {
         viewModel.getPopularItems()
         observerPopularItemsLiveData()
         onPopularItemClick()
+        onPopularItemLongClick()
 
         prepareCategoriesRecyclerView()
         viewModel.getCategories()
@@ -66,7 +70,21 @@ class HomeFragment : Fragment() {
         onCategoryClick()
 
 
+        onClickSearch()
+    }
 
+    private fun onClickSearch() {
+        binding.imgSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_searchMealFragment)
+        }
+    }
+
+
+    private fun onPopularItemLongClick() {
+        popularItemAdapter.onLongItemClick = { meal ->
+            val mealBottomSheetFragment = MealBottomSheetFragment.newInstance(meal.idMeal)
+            mealBottomSheetFragment.show(childFragmentManager,"Meal Info")
+        }
     }
 
     private fun onCategoryClick() {

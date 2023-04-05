@@ -19,5 +19,24 @@
         android:id="@+id/homeFragment"
         android:name="com.example.foodapp.fragment.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/fragment_home"/>
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_searchMealFragment"
+            app:destination="@id/searchMealFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchMealFragment"
+        android:name="com.example.foodapp.fragment.SearchMealFragment"
+        android:label="fragment_search_meal"
+        tools:layout="@layout/fragment_search_meal" />
+    <fragment
+        android:id="@+id/listNationFragment"
+        android:name="com.example.foodapp.fragment.ListCountryFragment"
+        android:label="fragment_list_nation"
+        tools:layout="@layout/fragment_list_nation" />
+    <fragment
+        android:id="@+id/ingredientFragment"
+        android:name="com.example.foodapp.fragment.IngredientFragment"
+        android:label="fragment_ingredient"
+        tools:layout="@layout/fragment_ingredient" />
 </navigation>

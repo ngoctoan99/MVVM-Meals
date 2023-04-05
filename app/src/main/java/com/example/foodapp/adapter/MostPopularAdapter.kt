@@ -10,6 +10,7 @@ import com.example.foodapp.model.MealByCategory
 
 class MostPopularAdapter(): RecyclerView.Adapter<MostPopularAdapter.PopularMealViewHolder>() {
     lateinit var onItemClick:((MealByCategory)->Unit)
+    lateinit var onLongItemClick:((MealByCategory)->Unit)
     private var mealList = ArrayList<MealByCategory>()
     @SuppressLint("NotifyDataSetChanged")
     fun setMeals(mealList:ArrayList<MealByCategory>){
@@ -27,6 +28,10 @@ class MostPopularAdapter(): RecyclerView.Adapter<MostPopularAdapter.PopularMealV
             .into(holder.binding.imgPopularMealItem)
         holder.itemView.setOnClickListener {
             onItemClick.invoke(mealList[position])
+        }
+        holder.itemView.setOnLongClickListener{
+            onLongItemClick.invoke(mealList[position])
+            true
         }
     }
 
