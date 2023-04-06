@@ -31,4 +31,10 @@ interface MealApi {
     fun getMealByArea(@Query("a") countryName:String):Call<MealByCategoryList>
 
 
+    @GET("list.php?i=list")
+    fun getAllIngredient():Call<IngredinentList>
+
+    @GET("filter.php")
+    fun getMealByIngredient(@Query("i") ingredientName: String):Call<MealByCategoryList>
+
 }

@@ -31,7 +31,6 @@
                 android:layout_height="?actionBarSize"/>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_add_favorite"
         android:layout_width="wrap_content"
@@ -82,13 +81,37 @@
                     android:drawableTint="@color/g_black"
                     android:layout_weight="1"/>
             </LinearLayout>
-
+            <TextView
+                android:id="@id/tv2"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/linear_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:fontFamily="@font/myfont"
+                android:textSize="@dimen/_15sdp"
+                android:text="Ingredient :"/>
+            <TextView
+                android:id="@+id/tvDetailIngredient"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Detail Ingredient"
+                app:layout_constraintTop_toBottomOf="@id/tv2"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:textColor="@color/black"
+                android:textStyle="normal"
+                />
             <TextView
                 android:id="@+id/tv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Instruction"
-                app:layout_constraintTop_toBottomOf="@id/linear_layout"
+                android:text="Instruction :"
+                app:layout_constraintTop_toBottomOf="@id/tvDetailIngredient"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_10sdp"

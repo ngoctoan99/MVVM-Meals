@@ -17,6 +17,7 @@ import com.example.foodapp.adapter.MostPopularAdapter
 import com.example.foodapp.activity.MealActivity
 import com.example.foodapp.adapter.CategoryAdapter
 import com.example.foodapp.databinding.FragmentHomeBinding
+import com.example.foodapp.fragment.bottomDialog.MealBottomSheetFragment
 import com.example.foodapp.model.MealByCategory
 import com.example.foodapp.model.Meal
 import com.example.foodapp.viewmodel.HomeViewModel

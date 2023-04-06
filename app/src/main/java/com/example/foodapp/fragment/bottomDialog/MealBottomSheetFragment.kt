@@ -1,4 +1,4 @@
-package com.example.foodapp.fragment
+package com.example.foodapp.fragment.bottomDialog
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,6 +12,7 @@ import com.example.foodapp.R
 import com.example.foodapp.activity.MainActivity
 import com.example.foodapp.activity.MealActivity
 import com.example.foodapp.databinding.FragmentMealBottomSheetBinding
+import com.example.foodapp.fragment.HomeFragment
 import com.example.foodapp.viewmodel.HomeViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

@@ -20,7 +20,9 @@ class HomeViewModel(
     private var popularItemLiveData = MutableLiveData<List<MealByCategory>>()
     private var categoryLiveData = MutableLiveData<List<Category>>()
     private var countryLiveData = MutableLiveData<List<Country>>()
+    private var ingredientLiveData = MutableLiveData<List<Ingredient>>()
     private var bottomSheetMealLiveData = MutableLiveData<Meal>()
+    private var bottomSheetIngredientLiveData = MutableLiveData<List<MealByCategory>>()
     private var searchMealLiveData = MutableLiveData<List<Meal>>()
     private var favoriteMealLIveData = mealDatabase.mealDao().getAllMeal()
     private var saveSateRandomMeal : Meal ?= null
@@ -97,12 +99,33 @@ class HomeViewModel(
                         countryLiveData.postValue(countryList.meals)
                     }
                 }else {
-
+                    return
                 }
             }
 
             override fun onFailure(call: Call<ListCountry>, t: Throwable) {
-                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    fun getAllIngredient(){
+        RetrofitInstance.api.getAllIngredient().enqueue(object:Callback<IngredinentList>{
+            override fun onResponse(
+                call: Call<IngredinentList>,
+                response: Response<IngredinentList>
+            ) {
+                if(response.body() != null){
+                    response.body()?.let {
+                        ingredientLiveData.postValue(it.meals)
+                    }
+                }else {
+                    return
+                }
+            }
+
+            override fun onFailure(call: Call<IngredinentList>, t: Throwable) {
+
             }
 
         })
@@ -122,6 +145,7 @@ class HomeViewModel(
     fun observeFavoritesMealsLiveData():LiveData<List<Meal>>{
         return favoriteMealLIveData
     }
+    fun observeIngredientLiveData():LiveData<List<Ingredient>> = ingredientLiveData
 
     fun deleteMeal(meal:Meal){
         viewModelScope.launch {
@@ -148,6 +172,30 @@ class HomeViewModel(
 
         })
     }
+
+    fun getMealByIngredientName(ingredientName:String){
+        RetrofitInstance.api.getMealByIngredient(ingredientName).enqueue(object :Callback<MealByCategoryList>{
+            override fun onResponse(
+                call: Call<MealByCategoryList>,
+                response: Response<MealByCategoryList>
+            ) {
+                if(response.body() != null){
+                    response.body()?.let {
+                        bottomSheetIngredientLiveData.postValue(it.meals)
+                    }
+                }else {
+                    return
+                }
+            }
+
+            override fun onFailure(call: Call<MealByCategoryList>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    fun observerBottomSheetIngredient():LiveData<List<MealByCategory>> = bottomSheetIngredientLiveData
 
     fun observeBottomSheetMeal():LiveData<Meal> = bottomSheetMealLiveData
 }
