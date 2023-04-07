@@ -78,4 +78,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
 
+
+    //translate
+    implementation 'com.google.mlkit:translate:17.0.1'
+
 }

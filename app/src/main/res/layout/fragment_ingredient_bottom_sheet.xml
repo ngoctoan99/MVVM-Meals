@@ -5,66 +5,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="fragment.bottomDialog.IngredientBottomSheetFragment"
     android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/img_bottom_sheet"
-        android:layout_width="@dimen/_80sdp"
-        android:layout_height="@dimen/_80sdp"
-        android:layout_marginTop="15dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-
-
-        />
-    <TextView
-        android:id="@+id/tv_ingredient_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Meal Name"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/img_bottom_sheet"
-        app:layout_constraintStart_toEndOf="@id/img_bottom_sheet"
-        android:textColor="@color/g_black"
-        android:textSize="14sp"
-        android:layout_marginStart="10dp"
-        android:fontFamily="@font/myfont"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Description"
-        android:layout_marginStart="10dp"
-        android:maxLines ="3"
-        android:id="@+id/tv_ingredient_description"
-        app:layout_constraintStart_toEndOf="@id/img_bottom_sheet"
-        app:layout_constraintTop_toBottomOf="@id/tv_ingredient_name"
-        android:layout_marginEnd="10dp"
-        android:textColor="@color/g_black"
-        android:fontFamily="@font/myfont"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ingredients to make meals :"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:id="@+id/tv_ingredient_meal"
-        app:layout_constraintStart_toStartOf="@id/img_bottom_sheet"
-        app:layout_constraintTop_toBottomOf="@id/img_bottom_sheet"
-        android:textColor="@color/g_black"
-        android:fontFamily="@font/myfont"
-        android:layout_marginTop="10dp"
-        />
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_bottom_ingredient"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="@id/img_bottom_sheet"
-        app:layout_constraintHorizontal_bias="0.016"
-        app:layout_constraintStart_toStartOf="@id/img_bottom_sheet"
-        app:layout_constraintTop_toBottomOf="@id/tv_ingredient_meal"
-        tools:listitem="@layout/meal_item" />
+        <ImageView
+            android:id="@+id/img_bottom_sheet"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+        <TextView
+            android:id="@+id/tv_ingredient_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Meal Name"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="@id/img_bottom_sheet"
+            app:layout_constraintStart_toEndOf="@id/img_bottom_sheet"
+            android:textColor="@color/g_black"
+            android:textSize="14sp"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/myfont"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Descriptionggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrggggggggggggggggggggggggggggg"
+            android:maxLines ="3"
+            android:id="@+id/tv_ingredient_description"
+            app:layout_constraintTop_toBottomOf="@id/tv_ingredient_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/tv_ingredient_name"
+            android:textColor="@color/g_black"
+            android:fontFamily="@font/myfont"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ingredients to make meals :"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:id="@+id/tv_ingredient_meal"
+            app:layout_constraintStart_toStartOf="@id/img_bottom_sheet"
+            app:layout_constraintTop_toBottomOf="@id/img_bottom_sheet"
+            android:textColor="@color/g_black"
+            android:fontFamily="@font/myfont"
+            android:layout_marginTop="10dp"
+            />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_bottom_ingredient"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constrainedHeight="true"
+            android:layout_marginTop="10dp"
+            app:layout_constraintEnd_toEndOf="@id/img_bottom_sheet"
+            app:layout_constraintStart_toStartOf="@id/img_bottom_sheet"
+            app:layout_constraintTop_toBottomOf="@id/tv_ingredient_meal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/meal_item" />
 </androidx.constraintlayout.widget.ConstraintLayout>

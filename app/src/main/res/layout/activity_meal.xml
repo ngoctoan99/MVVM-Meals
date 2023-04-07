@@ -96,12 +96,13 @@
                 android:text="Ingredient :"/>
             <TextView
                 android:id="@+id/tvDetailIngredient"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_height="wrap_content"
-                android:text="Detail Ingredient"
                 app:layout_constraintTop_toBottomOf="@id/tv2"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textColor="@color/black"
                 android:textStyle="normal"
@@ -122,11 +123,12 @@
                 />
             <TextView
                 android:id="@+id/tvDescription"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Description meal detail"
                 app:layout_constraintTop_toBottomOf="@id/tv1"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:textColor="@color/black"

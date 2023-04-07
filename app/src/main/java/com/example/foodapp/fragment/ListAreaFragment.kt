@@ -18,7 +18,7 @@ import com.example.foodapp.databinding.FragmentListNationBinding
 import com.example.foodapp.viewmodel.HomeViewModel
 
 
-class ListCountryFragment : Fragment() {
+class ListAreaFragment : Fragment() {
     private lateinit var binding : FragmentListNationBinding
     private lateinit var countryAdapter : CountryAdapter
     private lateinit var viewModel : HomeViewModel

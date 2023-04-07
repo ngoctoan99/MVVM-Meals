@@ -21,6 +21,7 @@ class HomeViewModel(
     private var categoryLiveData = MutableLiveData<List<Category>>()
     private var countryLiveData = MutableLiveData<List<Country>>()
     private var ingredientLiveData = MutableLiveData<List<Ingredient>>()
+    private var searchIngredientLiveData = MutableLiveData<List<Ingredient>>()
     private var bottomSheetMealLiveData = MutableLiveData<Meal>()
     private var bottomSheetIngredientLiveData = MutableLiveData<List<MealByCategory>>()
     private var searchMealLiveData = MutableLiveData<List<Meal>>()
@@ -91,6 +92,31 @@ class HomeViewModel(
             Log.e("toandatasearch",t.message.toString())
         }
     })
+
+    fun searchIngredient(searchQuery: String) {
+        val listSearch : ArrayList<Ingredient> = ArrayList()
+        RetrofitInstance.api.getAllIngredient().enqueue(object:Callback<IngredinentList>{
+            override fun onResponse(
+                call: Call<IngredinentList>,
+                response: Response<IngredinentList>
+            ) {
+                if(response.body() != null){
+                    response.body()?.let {
+                        for( i  in it.meals){
+                            if(i.strIngredient.lowercase().contains(searchQuery)){
+                                listSearch.add(i)
+                            }
+                        }
+                        searchIngredientLiveData.postValue(listSearch)
+                    }
+                }else {
+                    return
+                }
+            }
+            override fun onFailure(call: Call<IngredinentList>, t: Throwable) {
+            }
+        })
+    }
     fun getCountry(){
         RetrofitInstance.api.getAllArea().enqueue(object: Callback<ListCountry>{
             override fun onResponse(call: Call<ListCountry>, response: Response<ListCountry>) {
@@ -108,7 +134,6 @@ class HomeViewModel(
 
         })
     }
-
     fun getAllIngredient(){
         RetrofitInstance.api.getAllIngredient().enqueue(object:Callback<IngredinentList>{
             override fun onResponse(
@@ -133,6 +158,7 @@ class HomeViewModel(
 
     fun observerCountryLiveData():LiveData<List<Country>> = countryLiveData
     fun observerSearchMealLiveData():LiveData<List<Meal>> = searchMealLiveData
+    fun observerSearchIngredientLiveData():LiveData<List<Ingredient>> = searchIngredientLiveData
     fun observerRandomMealLiveData():LiveData<Meal>{
         return randomMealLiveData
     }

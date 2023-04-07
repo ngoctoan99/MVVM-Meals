@@ -31,7 +31,7 @@
         tools:layout="@layout/fragment_search_meal" />
     <fragment
         android:id="@+id/listNationFragment"
-        android:name="com.example.foodapp.fragment.ListCountryFragment"
+        android:name="com.example.foodapp.fragment.ListAreaFragment"
         android:label="fragment_list_nation"
         tools:layout="@layout/fragment_list_nation" />
     <fragment

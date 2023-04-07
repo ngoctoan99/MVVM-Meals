@@ -17,6 +17,10 @@ import com.example.foodapp.fragment.HomeFragment
 import com.example.foodapp.model.Meal
 import com.example.foodapp.viewmodel.MealViewModel
 import com.example.foodapp.viewmodel.factory.MealViewModelFactory
+import com.google.mlkit.common.model.DownloadConditions
+import com.google.mlkit.nl.translate.Translation
+import com.google.mlkit.nl.translate.Translator
+import com.google.mlkit.nl.translate.TranslatorOptions
 
 class MealActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMealBinding
@@ -27,6 +31,7 @@ class MealActivity : AppCompatActivity() {
     private lateinit var mealViewModel : MealViewModel
     private  var ingredientString : String? = "\r"
     private var mealToSave:Meal?=null
+    private lateinit var main : MainActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMealBinding.inflate(layoutInflater)
@@ -34,7 +39,7 @@ class MealActivity : AppCompatActivity() {
         val mealDatabase  =MealDatabase.getInstance(this)
         val viewModelFactory = MealViewModelFactory(mealDatabase)
         mealViewModel = ViewModelProvider(this,viewModelFactory)[MealViewModel::class.java]
-
+        main = MainActivity()
         getMealInformationFromIntent()
         loadingCase()
         setInformationInViews()
@@ -44,6 +49,7 @@ class MealActivity : AppCompatActivity() {
         onFavoriteClick()
         setDataIngredient()
     }
+
 
     private fun setDataIngredient() {
        mealViewModel.observerMealDetailLiveData().observe(this){ mealToSave->
@@ -97,6 +103,8 @@ class MealActivity : AppCompatActivity() {
             binding.tvArea.text = "Area : ${t.strArea}"
             binding.tvDescription.text = t.strInstructions
             youtubeLink = t.strYoutube.toString()
+//            main.translationLanguage(t.strInstructions.toString(),binding.tvDescription)
+
         }
     }
 
