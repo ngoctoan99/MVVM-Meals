@@ -13,6 +13,7 @@ import com.example.foodapp.R
 import com.example.foodapp.activity.MainActivity
 import com.example.foodapp.activity.MealActivity
 import com.example.foodapp.adapter.CategoryMealsAdapter
+import com.example.foodapp.adapter.IngredientMealAdapter
 import com.example.foodapp.databinding.FragmentIngredientBottomSheetBinding
 import com.example.foodapp.fragment.HomeFragment
 import com.example.foodapp.viewmodel.HomeViewModel
@@ -24,7 +25,7 @@ class IngredientBottomSheetFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding : FragmentIngredientBottomSheetBinding
     private lateinit var viewModel: HomeViewModel
-    private lateinit var bottomIngredientAdapter : CategoryMealsAdapter
+    private lateinit var bottomIngredientAdapter : IngredientMealAdapter
 
     private var ingredientName: String? = ""
     private var ingredientDescription: String? = ""
@@ -90,10 +91,10 @@ class IngredientBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun prepareRecyclerView() {
-        bottomIngredientAdapter = CategoryMealsAdapter()
+        bottomIngredientAdapter = IngredientMealAdapter()
         binding.rvBottomIngredient.apply {
             adapter = bottomIngredientAdapter
-            layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
+            layoutManager = GridLayoutManager(context,3,GridLayoutManager.VERTICAL,false)
         }
     }
     companion object {

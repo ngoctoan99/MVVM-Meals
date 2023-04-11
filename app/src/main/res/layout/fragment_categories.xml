@@ -6,9 +6,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragment.CategoriesFragment">
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:spanCount="3"
+        android:orientation="horizontal"
+        tools:listitem="@layout/row_category_item"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        android:id = "@+id/rv_categories"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id = "@+id/rv_meal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id = "@+id/rv_categories"
-        tools:ignore="MissingConstraints" />
-
+        android:layout_margin="10dp"
+        android:layout_height="wrap_content"
+        app:layout_constrainedHeight="true"
+        tools:listitem="@layout/meal_item"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        app:layout_constraintTop_toBottomOf="@+id/rv_categories"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

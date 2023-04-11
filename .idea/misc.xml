@@ -12,6 +12,7 @@
         <entry key="..\:/FoodApp/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/FoodApp/app/src/main/res/layout/popular_item.xml" value="0.1" />
         <entry key="..\:/FoodApp/app/src/main/res/menu/menu.xml" value="0.1" />
+        <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/drawable/background_shape_red.xml" value="0.145" />
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/drawable/ic_baseline_arrow_forward_24.xml" value="0.1" />
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/drawable/ic_baseline_category_24.xml" value="0.2655" />
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.2425" />
@@ -23,6 +24,7 @@
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/activity_country_meal.xml" value="0.20277777777777778" />
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/activity_main.xml" value="0.13645833333333332" />
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/activity_meal.xml" value="0.25" />
+        <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/background_shap_red.xml" value="0.1" />
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/category_item.xml" value="0.11388888888888889" />
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/country_item.xml" value="0.5" />
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/fragment_categories.xml" value="0.22870370370370371" />
@@ -34,8 +36,10 @@
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/fragment_meal_bottom_sheet.xml" value="0.19722222222222222" />
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/fragment_search_meal.xml" value="0.14" />
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/ingredient_item.xml" value="0.22" />
+        <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/meal_ingredient_item.xml" value="0.18" />
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/meal_item.xml" value="0.23333333333333334" />
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/popular_item.xml" value="0.20277777777777778" />
+        <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/layout/row_category_item.xml" value="0.33" />
         <entry key="..\:/Users/Sang/MVVM-Meals/app/src/main/res/menu/menu.xml" value="0.1" />
       </map>
     </option>

@@ -63,9 +63,6 @@ class FavoritesFragment : Fragment() {
         ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.rvFavorites)
     }
 
-
-
-
     private fun onFavoriteClick() {
         favoriteAdapter.setOnItemClickListener {
             val intent = Intent(activity, MealActivity::class.java)
@@ -87,7 +84,14 @@ class FavoritesFragment : Fragment() {
 
     private fun observeFavorites() {
         viewModel.observeFavoritesMealsLiveData().observe(requireActivity(), Observer {mealList ->
+            if(mealList.isNotEmpty()){
+                binding.rvFavorites.visibility = View.VISIBLE
+                binding.layoutEmpty.visibility = View.GONE
                 favoriteAdapter.differ.submitList(mealList)
+            }else {
+                binding.rvFavorites.visibility = View.GONE
+                binding.layoutEmpty.visibility = View.VISIBLE
+            }
         })
     }
 
