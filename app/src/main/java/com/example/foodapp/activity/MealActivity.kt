@@ -2,12 +2,14 @@ package com.example.foodapp.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.foodapp.R
@@ -17,10 +19,6 @@ import com.example.foodapp.fragment.HomeFragment
 import com.example.foodapp.model.Meal
 import com.example.foodapp.viewmodel.MealViewModel
 import com.example.foodapp.viewmodel.factory.MealViewModelFactory
-import com.google.mlkit.common.model.DownloadConditions
-import com.google.mlkit.nl.translate.Translation
-import com.google.mlkit.nl.translate.Translator
-import com.google.mlkit.nl.translate.TranslatorOptions
 
 class MealActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMealBinding
@@ -28,9 +26,11 @@ class MealActivity : AppCompatActivity() {
     private lateinit var mealName : String
     private lateinit var mealThumb : String
     private lateinit var youtubeLink : String
+    private lateinit var description : String
     private lateinit var mealViewModel : MealViewModel
-    private  var ingredientString : String? = "\r"
+    private  var ingredientString : String = "\r"
     private var mealToSave:Meal?=null
+    private var  count = 0;
     private lateinit var main : MainActivity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +45,42 @@ class MealActivity : AppCompatActivity() {
         setInformationInViews()
         mealViewModel.getDetail(mealId)
         observerMealDetailLiveData()
+        setDataIngredient()
+        actionClick()
+//        binding.scrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+//            if (scrollY  - oldScrollY >= 10) {
+//                Toast.makeText(this, "test1", Toast.LENGTH_SHORT).show()
+//            } else {
+//                Toast.makeText(this, "test2", Toast.LENGTH_SHORT).show()
+//            }
+//        })
+    }
+
+    private fun actionClick() {
         onYoutubeImageClick()
         onFavoriteClick()
-        setDataIngredient()
+        onClickTranslate()
+    }
+
+    private fun onClickTranslate() {
+       binding.imgTranslate.setOnClickListener{
+           count ++
+           if(count % 2 != 0){
+               main.translationLanguage(binding.tvCategory.text.toString().trim(),binding.tvCategory)
+               main.translationLanguage(binding.tvArea.text.toString().trim(),binding.tvArea)
+               main.translationLanguage(binding.tv1.text.toString().trim(),binding.tv1)
+               main.translationLanguage(binding.tv2.text.toString().trim(),binding.tv2)
+               main.translationLanguage(ingredientString,binding.tvDetailIngredient)
+               main.translationLanguage(description,binding.tvDescription)
+               main.translationLanguageCollap(binding.collapsingToolbar.title.toString().trim(),binding.collapsingToolbar)
+           }else {
+               setDataIngredient()
+               observerMealDetailLiveData()
+               binding.tv1.text = "Ingredient :"
+               binding.tv2.text = "Instruction :"
+               setInformationInViews()
+           }
+       }
     }
 
 
@@ -103,8 +136,7 @@ class MealActivity : AppCompatActivity() {
             binding.tvArea.text = "Area : ${t.strArea}"
             binding.tvDescription.text = t.strInstructions
             youtubeLink = t.strYoutube.toString()
-//            main.translationLanguage(t.strInstructions.toString(),binding.tvDescription)
-
+            description = t.strInstructions.toString()
         }
     }
 

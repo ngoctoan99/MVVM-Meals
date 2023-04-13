@@ -1,5 +1,10 @@
 package com.example.foodapp.viewmodel
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
+import android.provider.ContactsContract
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.foodapp.database.MealDatabase
 import com.example.foodapp.model.*
 import com.example.foodapp.retrofit.RetrofitInstance
+import com.example.foodapp.utils.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -63,15 +69,16 @@ class HomeViewModel(
 
         })
     }
+ //////////////////// old code
     fun getCategories(){
         RetrofitInstance.api.getCategories().enqueue(object : Callback<CategoryList>{
             override fun onResponse(call: Call<CategoryList>, response: Response<CategoryList>) {
                 if(response.body() != null){
-                    response.body()?.let { categoryList ->  
+                    response.body()?.let { categoryList ->
                         categoryLiveData.postValue(categoryList.categories)
                     }
                 }else {
-
+                    return
                 }
             }
 
@@ -81,6 +88,10 @@ class HomeViewModel(
 
         })
     }
+    fun observerCategoryLIveData():LiveData<List<Category>>{
+        return categoryLiveData
+    }
+ /////////////////////////////////////////////////
     fun searchMeal(searchQuery: String) = RetrofitInstance.api.searchMealByName(searchQuery).enqueue(object :Callback<MealList>{
         override fun onResponse(call: Call<MealList>, response: Response<MealList>) {
             val mealList = response.body()?.meals
@@ -164,9 +175,6 @@ class HomeViewModel(
     }
     fun observerPopularItemLiveData():LiveData<List<MealByCategory>>{
         return popularItemLiveData
-    }
-    fun observerCategoryLIveData():LiveData<List<Category>>{
-        return categoryLiveData
     }
     fun observeFavoritesMealsLiveData():LiveData<List<Meal>>{
         return favoriteMealLIveData

@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat.recreate
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -20,6 +23,7 @@ import com.example.foodapp.databinding.FragmentHomeBinding
 import com.example.foodapp.fragment.bottomDialog.MealBottomSheetFragment
 import com.example.foodapp.model.MealByCategory
 import com.example.foodapp.model.Meal
+import com.example.foodapp.utils.Resource
 import com.example.foodapp.viewmodel.HomeViewModel
 
 
