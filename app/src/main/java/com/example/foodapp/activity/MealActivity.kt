@@ -2,13 +2,14 @@ package com.example.foodapp.activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.GestureDetector
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.motion.widget.OnSwipe
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -20,11 +21,14 @@ import com.example.foodapp.model.Meal
 import com.example.foodapp.viewmodel.MealViewModel
 import com.example.foodapp.viewmodel.factory.MealViewModelFactory
 
-class MealActivity : AppCompatActivity() {
+
+class MealActivity : AppCompatActivity()  {
+    private val TAG: String = "toantest"
     private lateinit var binding : ActivityMealBinding
     private lateinit var mealId : String
     private lateinit var mealName : String
     private lateinit var mealThumb : String
+    private   var mealSave : String=""
     private lateinit var youtubeLink : String
     private lateinit var description : String
     private lateinit var mealViewModel : MealViewModel
@@ -32,6 +36,8 @@ class MealActivity : AppCompatActivity() {
     private var mealToSave:Meal?=null
     private var  count = 0;
     private lateinit var main : MainActivity
+   private lateinit var gestureScanner : GestureDetector
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMealBinding.inflate(layoutInflater)
@@ -47,14 +53,20 @@ class MealActivity : AppCompatActivity() {
         observerMealDetailLiveData()
         setDataIngredient()
         actionClick()
-//        binding.scrollview.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-//            if (scrollY  - oldScrollY >= 10) {
-//                Toast.makeText(this, "test1", Toast.LENGTH_SHORT).show()
-//            } else {
-//                Toast.makeText(this, "test2", Toast.LENGTH_SHORT).show()
-//            }
-//        })
+        checkSave()
     }
+
+    private fun checkSave() {
+        Log.d("checksave",mealSave +"")
+        if (mealSave == "saved"){
+            binding.btnAddFavorite.visibility = View.INVISIBLE
+            Log.d("checksave","1")
+        }else {
+            binding.btnAddFavorite.visibility = View.VISIBLE
+            Log.d("checksave","2")
+        }
+    }
+
 
     private fun actionClick() {
         onYoutubeImageClick()
@@ -63,7 +75,9 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun onClickTranslate() {
-       binding.imgTranslate.setOnClickListener{
+
+       binding.btnTranslate.setOnClickListener{
+           Log.d("datatranslate",ingredientString)
            count ++
            if(count % 2 != 0){
                main.translationLanguage(binding.tvCategory.text.toString().trim(),binding.tvCategory)
@@ -121,7 +135,7 @@ class MealActivity : AppCompatActivity() {
     }
 
     private fun onYoutubeImageClick() {
-        binding.imgYoutube.setOnClickListener {
+        binding.btnVideo.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
             startActivity(intent)
         }
@@ -154,22 +168,24 @@ class MealActivity : AppCompatActivity() {
         mealId = intent.getStringExtra(HomeFragment.MEAL_ID)!!
         mealName = intent.getStringExtra(HomeFragment.MEAL_NAME)!!
         mealThumb = intent.getStringExtra(HomeFragment.MEAL_THUMB)!!
+        if(intent.getStringExtra(HomeFragment.SAVE) != null){
+            mealSave = intent.getStringExtra(HomeFragment.SAVE)!!
+        }
     }
 
     private fun loadingCase(){
         binding.progressCircular.visibility = View.VISIBLE
-        binding.btnAddFavorite.visibility = View.INVISIBLE
         binding.tvDescription.visibility = View.INVISIBLE
         binding.tvCategory.visibility = View.INVISIBLE
         binding.tvArea.visibility = View.INVISIBLE
-        binding.imgYoutube.visibility = View.INVISIBLE
+        binding.btnVideo.visibility = View.INVISIBLE
     }
     private fun onResponseCase(){
         binding.progressCircular.visibility = View.INVISIBLE
-        binding.btnAddFavorite.visibility = View.VISIBLE
         binding.tvDescription.visibility = View.VISIBLE
         binding.tvCategory.visibility = View.VISIBLE
         binding.tvArea.visibility = View.VISIBLE
-        binding.imgYoutube.visibility = View.VISIBLE
+        binding.btnVideo.visibility = View.VISIBLE
     }
+
 }

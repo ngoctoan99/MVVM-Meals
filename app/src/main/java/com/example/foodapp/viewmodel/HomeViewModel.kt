@@ -13,7 +13,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.foodapp.database.MealDatabase
 import com.example.foodapp.model.*
 import com.example.foodapp.retrofit.RetrofitInstance
-import com.example.foodapp.utils.Resource
+
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback

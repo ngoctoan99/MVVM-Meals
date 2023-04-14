@@ -40,135 +40,175 @@
         app:tint= "@color/white"
         app:layout_anchor="@id/appbar"
         app:layout_anchorGravity="bottom|end"
-        android:layout_marginEnd="@dimen/_10sdp"/>
+        android:layout_marginEnd="@dimen/_5sdp"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_video"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_ondemand_video_24"
+        app:backgroundTint="@color/accent"
+        app:tint= "@color/white"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_marginEnd="@dimen/_105sdp"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_translate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_translate_24"
+        app:backgroundTint="@color/accent"
+        app:tint= "@color/white"
+        app:layout_anchor="@id/appbar"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_marginEnd="@dimen/_55sdp"/>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scrollview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
+        app:layout_anchorGravity="top|center"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_scroll"
             android:layout_width="match_parent"
-            android:layout_marginBottom="30dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="30dp">
+
             <LinearLayout
                 android:id="@+id/linear_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
+
                 <TextView
                     android:id="@+id/tvCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Category:Beef"
-                    android:textStyle="bold"
-                    android:textColor="@color/g_black"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:drawableLeft="@drawable/ic_baseline_category_24"
                     android:drawableTint="@color/g_black"
-                    android:layout_weight="1"/>
+                    android:text="Category:Beef"
+                    android:textColor="@color/g_black"
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/tvArea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Area:VN"
-                    android:textStyle="bold"
-                    android:textColor="@color/g_black"
+                    android:layout_weight="1"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:drawableLeft="@drawable/ic_baseline_location_on_24"
                     android:drawableTint="@color/g_black"
-                    android:layout_weight="1"/>
+                    android:text="Area:VN"
+                    android:textColor="@color/g_black"
+                    android:textStyle="bold" />
             </LinearLayout>
+
             <TextView
                 android:id="@id/tv2"
-                android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/linear_layout"
-                app:layout_constraintStart_toStartOf="parent"
-                android:textColor="@color/black"
-                android:textStyle="bold"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:fontFamily="@font/myfont"
+                android:text="Ingredient :"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp"
-                android:text="Ingredient :"/>
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/linear_layout" />
+
             <TextView
                 android:id="@+id/tvDetailIngredient"
                 android:layout_width="0dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tv2"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:textColor="@color/black"
                 android:textStyle="normal"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv2" />
+
             <TextView
                 android:id="@+id/tv1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Instruction :"
-                app:layout_constraintTop_toBottomOf="@id/tvDetailIngredient"
-                app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:textColor="@color/black"
-                android:textStyle="bold"
                 android:fontFamily="@font/myfont"
+                android:text="Instruction :"
+                android:textColor="@color/black"
                 android:textSize="@dimen/_15sdp"
-                />
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDetailIngredient" />
+
             <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tv1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_marginStart="@dimen/_5sdp"
                 android:layout_marginTop="@dimen/_5sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:textColor="@color/black"
                 android:textStyle="normal"
-                />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-        <ImageView
-            android:id="@+id/img_youtube"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:src="@drawable/ic_baseline_ondemand_video_24"
-            android:layout_gravity="bottom|start"
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_marginStart="50dp"/>
-        <ImageView
-            android:id="@+id/img_translate"
-            android:layout_width="@dimen/_40sdp"
-            android:layout_height="@dimen/_40sdp"
-            android:layout_marginEnd="50dp"
-            android:src="@drawable/ic_baseline_translate_24"
-            android:layout_gravity="bottom|end"
-            android:layout_marginBottom="@dimen/_10sdp"/>
-        <TextView
-            android:id="@+id/tv_translate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Translate to VN"
-            android:layout_marginEnd="30dp"
-            android:layout_gravity="bottom|end"
-            />
-        <TextView
-            android:id="@+id/tv_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Video tutorials "
-            android:layout_marginStart="30dp"
-            android:layout_gravity="bottom|start"
-            />
+<!--    <LinearLayout-->
+<!--        android:id = "@+id/layout_bottom"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_gravity="bottom">-->
+<!--        <LinearLayout-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:gravity="center"-->
+<!--            android:orientation="vertical">-->
+<!--            <ImageView-->
+<!--                android:id="@+id/img_youtube"-->
+<!--                android:layout_width="@dimen/_40sdp"-->
+<!--                android:layout_height="@dimen/_40sdp"-->
+<!--                android:src="@drawable/ic_baseline_ondemand_video_24"/>-->
+<!--            <TextView-->
+<!--                android:id="@+id/tv_video"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Video tutorials " />-->
+<!--        </LinearLayout>-->
+<!--        <LinearLayout-->
+<!--            android:layout_weight="1"-->
+<!--            android:orientation="vertical"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content">-->
+<!--            <ImageView-->
+<!--                android:id="@+id/img_translate"-->
+<!--                android:layout_width="@dimen/_40sdp"-->
+<!--                android:layout_height="@dimen/_40sdp"-->
+<!--                android:src="@drawable/ic_baseline_translate_24" />-->
+<!--            <TextView-->
+<!--                android:id="@+id/tv_translate"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Translate to VN" />-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+
     <com.google.android.material.progressindicator.LinearProgressIndicator
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

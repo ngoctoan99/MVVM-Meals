@@ -23,7 +23,6 @@ import com.example.foodapp.databinding.FragmentHomeBinding
 import com.example.foodapp.fragment.bottomDialog.MealBottomSheetFragment
 import com.example.foodapp.model.MealByCategory
 import com.example.foodapp.model.Meal
-import com.example.foodapp.utils.Resource
 import com.example.foodapp.viewmodel.HomeViewModel
 
 
