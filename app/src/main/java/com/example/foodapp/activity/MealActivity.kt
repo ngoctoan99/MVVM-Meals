@@ -28,7 +28,7 @@ class MealActivity : AppCompatActivity()  {
     private lateinit var mealId : String
     private lateinit var mealName : String
     private lateinit var mealThumb : String
-    private   var mealSave : String=""
+    private var mealSave : String=""
     private lateinit var youtubeLink : String
     private lateinit var description : String
     private lateinit var mealViewModel : MealViewModel
@@ -53,17 +53,14 @@ class MealActivity : AppCompatActivity()  {
         observerMealDetailLiveData()
         setDataIngredient()
         actionClick()
-        checkSave()
+//        checkSave()
     }
 
     private fun checkSave() {
-        Log.d("checksave",mealSave +"")
         if (mealSave == "saved"){
             binding.btnAddFavorite.visibility = View.INVISIBLE
-            Log.d("checksave","1")
         }else {
             binding.btnAddFavorite.visibility = View.VISIBLE
-            Log.d("checksave","2")
         }
     }
 
@@ -115,7 +112,7 @@ class MealActivity : AppCompatActivity()  {
                if(arrayIngredient[i].contains("null")|| arrayIngredient[i] == " : " ||arrayIngredient[i] == "  :  " ||arrayIngredient[i]== " :  "){
                    ingredientString +=""
                }else {
-                   ingredientString  = ingredientString +" - "+ arrayIngredient[i] + "\r\n\r"
+                   ingredientString  = ingredientString +" - "+ arrayIngredient[i] + " \r\n\r"
                }
            }
            Log.d("dataingradient",ingredientString.toString())
@@ -136,8 +133,13 @@ class MealActivity : AppCompatActivity()  {
 
     private fun onYoutubeImageClick() {
         binding.btnVideo.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
-            startActivity(intent)
+           if(youtubeLink == "null" || youtubeLink.isNotEmpty()){
+               val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
+               startActivity(intent)
+           }
+            else {
+                Toast.makeText(this,"Have error about this video",Toast.LENGTH_SHORT).show()
+           }
         }
     }
     @SuppressLint("SetTextI18n")
