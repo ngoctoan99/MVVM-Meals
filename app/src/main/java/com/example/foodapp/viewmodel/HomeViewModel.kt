@@ -25,7 +25,7 @@ class HomeViewModel(
     private var randomMealLiveData = MutableLiveData<Meal>()
     private var popularItemLiveData = MutableLiveData<List<MealByCategory>>()
     private var categoryLiveData = MutableLiveData<List<Category>>()
-    private var countryLiveData = MutableLiveData<List<Country>>()
+    private val countryLiveData = MutableLiveData<List<Country>>()
     private var ingredientLiveData = MutableLiveData<List<Ingredient>>()
     private var searchIngredientLiveData = MutableLiveData<List<Ingredient>>()
     private var bottomSheetMealLiveData = MutableLiveData<Meal>()
@@ -33,6 +33,8 @@ class HomeViewModel(
     private var searchMealLiveData = MutableLiveData<List<Meal>>()
     private var favoriteMealLIveData = mealDatabase.mealDao().getAllMeal()
     private var saveSateRandomMeal : Meal ?= null
+//    val  countryLiveData:LiveData<List<Country>>
+//        get() = _countryLiveData
     fun getRandomMeal(){
         saveSateRandomMeal?.let {
             randomMealLiveData.postValue(it)
@@ -166,7 +168,6 @@ class HomeViewModel(
 
         })
     }
-
     fun observerCountryLiveData():LiveData<List<Country>> = countryLiveData
     fun observerSearchMealLiveData():LiveData<List<Meal>> = searchMealLiveData
     fun observerSearchIngredientLiveData():LiveData<List<Ingredient>> = searchIngredientLiveData
@@ -223,7 +224,6 @@ class HomeViewModel(
             }
 
             override fun onFailure(call: Call<MealByCategoryList>, t: Throwable) {
-                TODO("Not yet implemented")
             }
 
         })

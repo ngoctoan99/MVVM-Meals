@@ -64,7 +64,6 @@ class MealActivity : AppCompatActivity()  {
         }
     }
 
-
     private fun actionClick() {
         onYoutubeImageClick()
         onFavoriteClick()

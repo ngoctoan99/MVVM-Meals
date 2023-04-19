@@ -38,7 +38,6 @@ android {
         viewBinding true
     }
 }
-
 dependencies {
 
     implementation 'androidx.core:core-ktx:1.8.0'
@@ -81,5 +80,8 @@ dependencies {
 
     //translate
     implementation 'com.google.mlkit:translate:17.0.1'
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 
 }
