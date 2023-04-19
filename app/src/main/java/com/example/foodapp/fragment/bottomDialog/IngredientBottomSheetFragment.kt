@@ -48,7 +48,8 @@ class IngredientBottomSheetFragment : BottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding.rvBottomIngredient.visibility = View.GONE
+        binding.isLoading.visibility = View.VISIBLE
         //set data view orther
         setDateView()
         //set up data in rv bottom ingredient
@@ -87,6 +88,8 @@ class IngredientBottomSheetFragment : BottomSheetDialogFragment() {
     private fun observerBottomIngredient() {
         viewModel.observerBottomSheetIngredient().observe(viewLifecycleOwner){
             bottomIngredientAdapter.setMealList(it)
+            binding.rvBottomIngredient.visibility = View.VISIBLE
+            binding.isLoading.visibility = View.GONE
         }
     }
 

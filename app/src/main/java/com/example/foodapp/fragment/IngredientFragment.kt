@@ -42,6 +42,8 @@ class IngredientFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.rvIngredient.visibility = View.GONE
+        binding.isLoading.visibility = View.VISIBLE
         prepareRecyclerview()
         viewModel.getAllIngredient()
         observerIngredient()
@@ -50,8 +52,12 @@ class IngredientFragment : Fragment() {
     }
 
     private fun observerSearchIngredient() {
+        binding.rvIngredient.visibility = View.GONE
+        binding.isLoading.visibility = View.VISIBLE
         viewModel.observerSearchIngredientLiveData().observe(viewLifecycleOwner){
             ingredientAdapter.setIngredientList(it)
+            binding.rvIngredient.visibility = View.VISIBLE
+            binding.isLoading.visibility = View.GONE
 
         }
     }
@@ -85,6 +91,8 @@ class IngredientFragment : Fragment() {
     private fun observerIngredient() {
         viewModel.observeIngredientLiveData().observe(viewLifecycleOwner){
             ingredientAdapter.setIngredientList(it)
+            binding.rvIngredient.visibility = View.VISIBLE
+            binding.isLoading.visibility = View.GONE
         }
     }
 

@@ -10,33 +10,32 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodapp.R
 import com.example.foodapp.activity.CountryMealActivity
 import com.example.foodapp.activity.MainActivity
 import com.example.foodapp.adapter.CountryAdapter
 import com.example.foodapp.databinding.FragmentListNationBinding
-import com.example.foodapp.model.Country
-import com.example.foodapp.viewmodel.CountryMealViewModel
 import com.example.foodapp.viewmodel.HomeViewModel
 import com.github.mikephil.charting.animation.Easing
-import com.github.mikephil.charting.charts.PieChart
+import com.github.mikephil.charting.components.Legend
+import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener
 import com.github.mikephil.charting.utils.MPPointF
-import kotlinx.android.synthetic.main.fragment_list_nation.*
 
 
-class ListAreaFragment : Fragment() {
+class ListAreaFragment : Fragment(), OnChartValueSelectedListener {
+    val number : Long = 500
     private lateinit var binding : FragmentListNationBinding
     private lateinit var countryAdapter : CountryAdapter
     private lateinit var viewModel : HomeViewModel
-    private lateinit var arrayList: List<Country>
+    val arrayList = arrayOf<String>("American","British","Canadian","Chinese","Croatian","Dutch","Egyptian","French","Greek","Indian","Irish","Italian","Jamaican","Japanese","Kenyan","Malaysian","Mexican","Moroccan","Polish","Portuguese","Russian","Spanish","Thai","Tunisian","Turkish","Unknown","Vietnamese")
+    val arrayCount = arrayOf<Float>(32f,57f,13f,12f,8f,4f,8f,28f,8f,11f,8f,19f,8f,9f,2f,8f,5f,7f,8f,8f,1f,3f,3f,8f,2f,3f,2f)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = (activity as MainActivity).viewModel
@@ -52,14 +51,20 @@ class ListAreaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getCountry()
-        arrayList = ArrayList()
         prepareRecyclerView()
         observerCountryLiveData()
         onClickCountry()
-        binding.pieChart.visibility = View.GONE
-        setDataChart()
+        setDataChart(arrayCount)
+        binding.pieChart.setOnChartValueSelectedListener(this)
     }
-    private fun setDataChart() {
+    private fun sumAll(arrayCount: Array<Float>):Float{
+        var sum = 0f
+        for (i in arrayCount.indices){
+            sum += arrayCount[i]
+        }
+        return sum
+    }
+    private fun setDataChart(arrayCount: Array<Float>) {
         // on below line we are setting user percent value,
         // setting description as enabled and offset for pie chart
         binding.pieChart.setUsePercentValues(true)
@@ -79,8 +84,8 @@ class ListAreaFragment : Fragment() {
         binding.pieChart.setTransparentCircleAlpha(110)
 
         // on  below line we are setting hole radius
-        binding.pieChart.holeRadius = 50f
-        binding.pieChart.transparentCircleRadius = 53f
+        binding.pieChart.holeRadius = 58f
+        binding.pieChart.transparentCircleRadius = 61f
 
         // on below line we are setting center text
         binding.pieChart.setDrawCenterText(true)
@@ -104,17 +109,19 @@ class ListAreaFragment : Fragment() {
         // on below line we are creating array list and
         // adding data to it to display in pie chart
         val entries: ArrayList<PieEntry> = ArrayList()
-       for(i in 0..26){
-           entries.add(PieEntry(10f))
+       for(i in arrayCount.indices){
+           val name = arrayList[i]
+           val percent = (arrayCount[i] / sumAll(arrayCount)) * 100f
+           entries.add(PieEntry(percent,"$name : $percent"))
        }
         // on below line we are setting pie data set
-        val dataSet = PieDataSet(entries, "Mobile OS")
+        val dataSet = PieDataSet(entries, "")
 
         // on below line we are setting icons.
         dataSet.setDrawIcons(false)
 
         // on below line we are setting slice for pie
-        dataSet.sliceSpace = 3f
+        dataSet.sliceSpace = 1f
         dataSet.iconsOffset = MPPointF(0f, 40f)
         dataSet.selectionShift = 5f
 
@@ -154,14 +161,23 @@ class ListAreaFragment : Fragment() {
         // on below line we are setting pie data set
         val data = PieData(dataSet)
         data.setValueFormatter(PercentFormatter())
-        data.setValueTextSize(12f)
+        data.setValueTextSize(0f)
         data.setValueTypeface(Typeface.DEFAULT_BOLD)
         data.setValueTextColor(Color.WHITE)
         binding.pieChart.data = data
+        binding.pieChart.setDrawEntryLabels(false)
+        binding.pieChart.description.isEnabled = false
+        val l = binding.pieChart.legend
+        binding.pieChart.legend.isEnabled = true
+        l.verticalAlignment = Legend.LegendVerticalAlignment.CENTER
+        l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT // position
+        l.formToTextSpace = 4f
+        l.form = Legend.LegendForm.LINE // form type : line, square, circle ..
+        l.textSize = 10f
+        l.orientation = Legend.LegendOrientation.VERTICAL // side by side or bottom to bottom
 
         // undo all highlights
         binding.pieChart.highlightValues(null)
-
         // loading chart
         binding.pieChart.invalidate()
 
@@ -176,9 +192,6 @@ class ListAreaFragment : Fragment() {
     private fun observerCountryLiveData() {
         viewModel.observerCountryLiveData().observe(viewLifecycleOwner){ list->
             countryAdapter.setCountryList(list)
-            arrayList.apply {
-                arrayList.toMutableList().addAll(list)
-            }
         }
     }
     private fun prepareRecyclerView() {
@@ -187,5 +200,15 @@ class ListAreaFragment : Fragment() {
             adapter = countryAdapter
             layoutManager = LinearLayoutManager(context)
         }
+    }
+
+    override fun onValueSelected(e: Entry?, h: Highlight?) {
+        val pieEntry = e as PieEntry
+        val label: String = pieEntry.label
+        Toast.makeText(context, "$label", Toast.LENGTH_SHORT).show()
+
+    }
+
+    override fun onNothingSelected() {
     }
 }

@@ -54,10 +54,15 @@ class CategoriesFragment : Fragment() {
         setMealData("Beef")
     }
     private fun setMealData(categoryName:String) {
+        binding.rvMeal.visibility= View.GONE
+        binding.isLoading.visibility = View.VISIBLE
         categoryMealsViewModel = ViewModelProviders.of(this)[CategoryMealsViewModel::class.java]
         categoryMealsViewModel.getMealsByCategory(categoryName)
         categoryMealsViewModel.observerMealsLiveData().observe(viewLifecycleOwner){
             categoryMealsAdapter.setMealList(it)
+            binding.rvMeal.visibility= View.VISIBLE
+            binding.isLoading.visibility = View.GONE
+
         }
         onPrepareRecyclerViewMeal()
         onClickItemMeal()

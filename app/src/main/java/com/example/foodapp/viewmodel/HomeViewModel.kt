@@ -33,8 +33,25 @@ class HomeViewModel(
     private var searchMealLiveData = MutableLiveData<List<Meal>>()
     private var favoriteMealLIveData = mealDatabase.mealDao().getAllMeal()
     private var saveSateRandomMeal : Meal ?= null
-//    val  countryLiveData:LiveData<List<Country>>
-//        get() = _countryLiveData
+//    val  countryLiveDatas:LiveData<List<Country>>
+//        get() = countryLiveData
+val mealLiveData = MutableLiveData<List<MealByCategory>>()
+
+    fun getMealsByCountry(countryName : String){
+        RetrofitInstance.api.getMealByArea(countryName).enqueue(object : Callback<MealByCategoryList> {
+            override fun onResponse(call: Call<MealByCategoryList>, response: Response<MealByCategoryList>) {
+                response.body()?.let { mealByCategoryList ->
+                    mealLiveData.postValue(mealByCategoryList.meals)
+                }
+            }
+
+            override fun onFailure(call: Call<MealByCategoryList>, t: Throwable) {
+                Log.e("categorydata",t.message.toString())
+            }
+
+        })
+    }
+    fun observerMealsLiveData(): LiveData<List<MealByCategory>> = mealLiveData
     fun getRandomMeal(){
         saveSateRandomMeal?.let {
             randomMealLiveData.postValue(it)
