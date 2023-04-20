@@ -15,7 +15,6 @@ import com.example.foodapp.R
 import com.example.foodapp.activity.CategoryMealActivity
 import com.example.foodapp.activity.MainActivity
 import com.example.foodapp.activity.MealActivity
-import com.example.foodapp.adapter.CategoryAdapter
 import com.example.foodapp.adapter.CategoryFragmentAdapter
 import com.example.foodapp.adapter.CategoryMealsAdapter
 import com.example.foodapp.adapter.FavoriteMealAdapter

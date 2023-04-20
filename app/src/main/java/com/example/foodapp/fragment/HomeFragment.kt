@@ -101,7 +101,7 @@ class HomeFragment : Fragment() {
 
     private fun prepareCategoriesRecyclerView() {
         binding.recViewCategories.apply {
-            layoutManager = GridLayoutManager(context,3,GridLayoutManager.VERTICAL,false)
+            layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
             adapter = categoryAdapter
         }
     }
