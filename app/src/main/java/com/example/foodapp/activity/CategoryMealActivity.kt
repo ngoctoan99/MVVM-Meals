@@ -28,15 +28,19 @@ class CategoryMealActivity : AppCompatActivity() {
         setContentView(binding.root)
         prepareRecyclerView()
         categoryName = intent.getStringExtra(HomeFragment.CATEGORY_NAME)!!
+
+        // instance categoryMealsViewModel
         categoryMealsViewModel = ViewModelProviders.of(this)[CategoryMealsViewModel::class.java]
         categoryMealsViewModel.getMealsByCategory(categoryName)
+
+        // get data MVVM categoy
         categoryMealsViewModel.observerMealsLiveData().observe(this, Observer {mealList ->
            categoryMealsAdapter.setMealList(mealList)
             binding.tvCategoryCount.text = "$categoryName : ${mealList.size}"
         })
         onClickCategoryMeal()
     }
-
+    // set up recyclerview
     private fun prepareRecyclerView() {
         categoryMealsAdapter = CategoryMealsAdapter()
         binding.rvMeals.apply {
@@ -44,7 +48,7 @@ class CategoryMealActivity : AppCompatActivity() {
             adapter = categoryMealsAdapter
         }
     }
-
+    // action click item category
     private fun onClickCategoryMeal(){
         categoryMealsAdapter.onItemClick = {
             val intent = Intent(this,MealActivity::class.java)

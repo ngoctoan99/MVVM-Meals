@@ -33,6 +33,8 @@ class HomeFragment : Fragment() {
     private lateinit var popularItemAdapter: MostPopularAdapter
     private lateinit var categoryAdapter : CategoryAdapter
     companion object{
+
+        // tag name intent
         const val MEAL_ID = "com.example.foodapp.fragment.idMeal"
         const val MEAL_NAME = "com.example.foodapp.fragment.nameMeal"
         const val MEAL_THUMB = "com.example.foodapp.fragment.thumbMeal"
@@ -43,6 +45,8 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 //        homeViewModel = ViewModelProviders.of(this)[HomeViewModel::class.java]
+
+        // init viewmodle , adapter
         viewModel = (activity as MainActivity).viewModel
         popularItemAdapter = MostPopularAdapter()
         categoryAdapter = CategoryAdapter()
@@ -58,22 +62,22 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         preparePopularItemRecyclerView()
-
+        // view random meal in home fragment
         viewModel.getRandomMeal()
         observerRandomMeal()
         onRanDomMealClick()
-
+        // view popular meal in home fragment
         viewModel.getPopularItems()
         observerPopularItemsLiveData()
         onPopularItemClick()
         onPopularItemLongClick()
-
+        // view category in home fragment
         prepareCategoriesRecyclerView()
         viewModel.getCategories()
         observerCategoryLiveData()
         onCategoryClick()
 
-
+        // action search meal
         onClickSearch()
     }
 
@@ -98,14 +102,14 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
     }
-
+    // set up recyclerview category
     private fun prepareCategoriesRecyclerView() {
         binding.recViewCategories.apply {
             layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
             adapter = categoryAdapter
         }
     }
-
+    // fetch data MVVM category to submit adapter
     private fun observerCategoryLiveData() {
         viewModel.observerCategoryLIveData().observe(viewLifecycleOwner) { categoryList->
                categoryAdapter.setCategoryList(categoryList)

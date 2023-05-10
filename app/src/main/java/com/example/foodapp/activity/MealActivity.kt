@@ -63,7 +63,7 @@ class MealActivity : AppCompatActivity()  {
             binding.btnAddFavorite.visibility = View.VISIBLE
         }
     }
-
+    // action click three button
     private fun actionClick() {
         onYoutubeImageClick()
         onFavoriteClick()
@@ -93,8 +93,11 @@ class MealActivity : AppCompatActivity()  {
        }
     }
 
-
+    // get data ingredient to arrange it to display
     private fun setDataIngredient() {
+
+
+        // array ingredient item
        mealViewModel.observerMealDetailLiveData().observe(this){ mealToSave->
            val arrayIngredient = arrayOf<String>("${mealToSave?.strIngredient1.toString()} : ${mealToSave?.strMeasure1.toString()}",
                "${mealToSave?.strIngredient2} : ${mealToSave?.strMeasure2}","${mealToSave?.strIngredient3} : ${mealToSave?.strMeasure3}",
@@ -141,6 +144,8 @@ class MealActivity : AppCompatActivity()  {
            }
         }
     }
+
+    // get data MVVM meal
     @SuppressLint("SetTextI18n")
     private fun observerMealDetailLiveData() {
         mealViewModel.observerMealDetailLiveData().observe(this
@@ -154,7 +159,7 @@ class MealActivity : AppCompatActivity()  {
             description = t.strInstructions.toString()
         }
     }
-
+    // set up view in toolbar and add image view
     private fun setInformationInViews() {
         Glide.with(applicationContext)
             .load(mealThumb)
@@ -163,7 +168,7 @@ class MealActivity : AppCompatActivity()  {
         binding.collapsingToolbar.setCollapsedTitleTextColor(resources.getColor(R.color.white))
         binding.collapsingToolbar.setExpandedTitleColor(resources.getColor(R.color.white))
     }
-
+    //get data to intent from activity before
     private fun getMealInformationFromIntent() {
         val intent = intent
         mealId = intent.getStringExtra(HomeFragment.MEAL_ID)!!
@@ -173,7 +178,7 @@ class MealActivity : AppCompatActivity()  {
             mealSave = intent.getStringExtra(HomeFragment.SAVE)!!
         }
     }
-
+    // view when loading data
     private fun loadingCase(){
         binding.progressCircular.visibility = View.VISIBLE
         binding.tvDescription.visibility = View.INVISIBLE
@@ -181,6 +186,7 @@ class MealActivity : AppCompatActivity()  {
         binding.tvArea.visibility = View.INVISIBLE
         binding.btnVideo.visibility = View.INVISIBLE
     }
+    // view when finish loading data
     private fun onResponseCase(){
         binding.progressCircular.visibility = View.INVISIBLE
         binding.tvDescription.visibility = View.VISIBLE

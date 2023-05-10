@@ -62,7 +62,7 @@ class FavoritesFragment : Fragment() {
         }
         ItemTouchHelper(itemTouchHelper).attachToRecyclerView(binding.rvFavorites)
     }
-
+    // action click item favorite meal
     private fun onFavoriteClick() {
         favoriteAdapter.setOnItemClickListener {
             val intent = Intent(activity, MealActivity::class.java)
@@ -73,7 +73,7 @@ class FavoritesFragment : Fragment() {
             startActivity(intent)
         }
     }
-
+    // prepare recyclerview show favorite meal
     private fun prepareRecyclerView() {
         favoriteAdapter = FavoriteMealAdapter()
         binding.rvFavorites.apply {
@@ -81,7 +81,7 @@ class FavoritesFragment : Fragment() {
             layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
         }
     }
-
+    // prepare data MVVM favorite
     private fun observeFavorites() {
         viewModel.observeFavoritesMealsLiveData().observe(requireActivity(), Observer {mealList ->
             if(mealList.isNotEmpty()){

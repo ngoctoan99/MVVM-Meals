@@ -34,7 +34,10 @@ class ListAreaFragment : Fragment(), OnChartValueSelectedListener {
     private lateinit var binding : FragmentListNationBinding
     private lateinit var countryAdapter : CountryAdapter
     private lateinit var viewModel : HomeViewModel
+
+    // array country name
     val arrayList = arrayOf<String>("American","British","Canadian","Chinese","Croatian","Dutch","Egyptian","French","Greek","Indian","Irish","Italian","Jamaican","Japanese","Kenyan","Malaysian","Mexican","Moroccan","Polish","Portuguese","Russian","Spanish","Thai","Tunisian","Turkish","Unknown","Vietnamese")
+    // array percent corresponding country name
     val arrayCount = arrayOf<Float>(32f,57f,13f,12f,8f,4f,8f,28f,8f,11f,8f,19f,8f,9f,2f,8f,5f,7f,8f,8f,1f,3f,3f,8f,2f,3f,2f)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +57,8 @@ class ListAreaFragment : Fragment(), OnChartValueSelectedListener {
         prepareRecyclerView()
         observerCountryLiveData()
         onClickCountry()
+
+        // set data to show Pie Chart in screen
         setDataChart(arrayCount)
         binding.pieChart.setOnChartValueSelectedListener(this)
     }
@@ -203,6 +208,8 @@ class ListAreaFragment : Fragment(), OnChartValueSelectedListener {
     }
 
     override fun onValueSelected(e: Entry?, h: Highlight?) {
+
+        // catch event click piece in pie chart
         val pieEntry = e as PieEntry
         val label: String = pieEntry.label
         Toast.makeText(context, "$label", Toast.LENGTH_SHORT).show()
