@@ -119,6 +119,7 @@
             app:spanCount="3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv3"
+            app:layout_constraintEnd_toEndOf="parent"
             android:id="@+id/rec_view_categories"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
