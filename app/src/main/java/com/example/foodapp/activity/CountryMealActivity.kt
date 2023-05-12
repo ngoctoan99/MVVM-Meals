@@ -28,9 +28,13 @@ class CountryMealActivity : AppCompatActivity() {
         binding = ActivityCountryMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
         prepareRecyclerView()
+        //get name country to activity before
         countryName = intent.getStringExtra(HomeFragment.COUNTRY_NAME)!!
+        // instance countryViewmodel
         countryViewModel = ViewModelProviders.of(this)[CountryMealViewModel::class.java]
         countryViewModel.getMealsByCountry(countryName)
+
+        // get data MVVM to set adapter
         countryViewModel.observerMealsLiveData().observe(this, Observer {mealList ->
             countryMealsAdapter.setMealList(mealList)
             binding.tvCountryName.text = "$countryName : ${mealList.size}"
@@ -38,7 +42,7 @@ class CountryMealActivity : AppCompatActivity() {
         onClickMeal()
 
     }
-
+    /// action click item in recyclerview
     private fun onClickMeal() {
         countryMealsAdapter.onItemClick = {
             val intent = Intent(this,MealActivity::class.java)
@@ -48,7 +52,7 @@ class CountryMealActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
+    // setup recyclerview
     private fun prepareRecyclerView() {
         countryMealsAdapter = CategoryMealsAdapter()
         binding.rvMealsCountry.apply {

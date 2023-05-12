@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
     var connectivity : ConnectivityManager? = null
     var info : NetworkInfo? = null
     private lateinit var  translator : Translator
+
+    // instance homeViewModel
      val viewModel : HomeViewModel by lazy {
         val mealDatabase = MealDatabase.getInstance(this)
         val homeViewModelProviderFactory = HomeViewModelFactory(mealDatabase)
@@ -47,12 +49,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // set up navigation view
         val navHostFragment= supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment
         val navController= navHostFragment.navController
         binding.botomNav.setupWithNavController(navController)
         checkConnectivity()
     }
-
+    // function translation en to vn when click button translation
      fun translationLanguage(sourceLanguageText : String, textView: TextView) {
         //set up option translation
         translatorOptions = TranslatorOptions.Builder()
@@ -75,6 +79,8 @@ class MainActivity : AppCompatActivity() {
             showToast("${it.message}")
         }
     }
+
+    // translation language collapToolbar en to vn
     fun translationLanguageCollap(sourceLanguageText : String, view: CollapsingToolbarLayout) {
         //set up option translation
         translatorOptions = TranslatorOptions.Builder()
@@ -96,7 +102,7 @@ class MainActivity : AppCompatActivity() {
             showToast("${it.message}")
         }
     }
-
+    // check connection internet to show dialog
     private fun checkConnectivity() {
         val manager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = manager.activeNetworkInfo
@@ -115,6 +121,8 @@ class MainActivity : AppCompatActivity() {
             alert.show()
         }
     }
+
+    /// function show toast
     private fun showToast(message: String){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

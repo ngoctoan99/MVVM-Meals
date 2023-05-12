@@ -14,7 +14,7 @@ abstract class MealDatabase :RoomDatabase(){
     companion object{
         @Volatile
         var INSTANCE : MealDatabase? = null
-
+        // create an instance of the database
         @Synchronized
         fun getInstance(context: Context):MealDatabase{
             if(INSTANCE == null){

@@ -42,6 +42,7 @@ class SearchMealFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         prepareRecyclerView()
         observerSearchMealLiveData()
+        // event click search
         onClickSearchMeal()
         actionSearch()
     }
@@ -50,6 +51,7 @@ class SearchMealFragment : Fragment() {
         binding.btnEnter.setOnClickListener {
             searchMeal()
         }
+        // automatic  search after text change 500ms
         var searchJob : Job? = null
         binding.edSearch.addTextChangedListener{ searchQuery->
             searchJob?.cancel()

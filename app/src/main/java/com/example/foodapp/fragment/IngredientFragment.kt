@@ -72,6 +72,7 @@ class IngredientFragment : Fragment() {
         }
         // automatic search
         var searchJob : Job? = null
+        // automatic search text change after 500 ms
         binding.edSearch.addTextChangedListener{ searchQuery->
             searchJob?.cancel()
             searchJob = lifecycleScope.launch{

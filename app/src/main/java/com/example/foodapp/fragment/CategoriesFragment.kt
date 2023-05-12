@@ -52,9 +52,13 @@ class CategoriesFragment : Fragment() {
         //set data meal item
         setMealData("Beef")
     }
+    // instance category meal and adapter
     private fun setMealData(categoryName:String) {
+
+        // display progressLoading when data loading
         binding.rvMeal.visibility= View.GONE
         binding.isLoading.visibility = View.VISIBLE
+        //
         categoryMealsViewModel = ViewModelProviders.of(this)[CategoryMealsViewModel::class.java]
         categoryMealsViewModel.getMealsByCategory(categoryName)
         categoryMealsViewModel.observerMealsLiveData().observe(viewLifecycleOwner){
@@ -71,6 +75,8 @@ class CategoriesFragment : Fragment() {
            setMealData(it.strCategory)
        }
     }
+
+    // set data first to display color click category and add data in adapter
     private fun observeCategory() {
         viewModel.observerCategoryLIveData().observe(viewLifecycleOwner){
             it[0].isCheck = true
@@ -80,6 +86,8 @@ class CategoriesFragment : Fragment() {
             categoryAdapter.setCategoryList(it)
         }
     }
+
+    // set up recyclerview category
     private fun onPrepareRecyclerViewCategory() {
         categoryAdapter = CategoryFragmentAdapter()
         binding.rvCategories.apply {
@@ -87,6 +95,8 @@ class CategoriesFragment : Fragment() {
             layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
         }
     }
+
+    //set up recyclerview meal
     private fun onPrepareRecyclerViewMeal(){
         categoryMealsAdapter = CategoryMealsAdapter()
         binding.rvMeal.apply {
@@ -94,7 +104,7 @@ class CategoriesFragment : Fragment() {
             layoutManager = GridLayoutManager(context,2,GridLayoutManager.VERTICAL,false)
         }
     }
-
+    // action click item in recyclerviewMeal
     private fun onClickItemMeal(){
         categoryMealsAdapter.onItemClick = {
             val intent = Intent(context, MealActivity::class.java)
