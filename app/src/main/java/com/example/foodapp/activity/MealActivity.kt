@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.motion.widget.OnSwipe
+import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -20,6 +21,11 @@ import com.example.foodapp.fragment.HomeFragment
 import com.example.foodapp.model.Meal
 import com.example.foodapp.viewmodel.MealViewModel
 import com.example.foodapp.viewmodel.factory.MealViewModelFactory
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+import kotlinx.android.synthetic.main.activity_meal.youtube_player
 
 
 class MealActivity : AppCompatActivity()  {
@@ -36,7 +42,8 @@ class MealActivity : AppCompatActivity()  {
     private var mealToSave:Meal?=null
     private var  count = 0;
     private lateinit var main : MainActivity
-   private lateinit var gestureScanner : GestureDetector
+    private lateinit var gestureScanner : GestureDetector
+    private var countYoutube :Int = 0
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +60,26 @@ class MealActivity : AppCompatActivity()  {
         observerMealDetailLiveData()
         setDataIngredient()
         actionClick()
-//        checkSave()
+        setUpPlayerVideo()
+    }
+
+    private fun setUpPlayerVideo() {
+        lifecycle.addObserver(binding.youtubePlayer)
+        binding.youtubePlayer.getPlayerUiController()
+        binding.youtubePlayer.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                // loading the selected video into the YouTube Player
+                val stringArray = youtubeLink.split("=")
+                Log.d("teststring",youtubeLink + " ////" + stringArray[1])
+                youTubePlayer.loadVideo(stringArray[1], 0F)
+                youTubePlayer.pause()
+            }
+
+            override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
+                // this method is called if video has ended,
+                super.onStateChange(youTubePlayer, state)
+            }
+        })
     }
 
     private fun checkSave() {
@@ -134,17 +160,25 @@ class MealActivity : AppCompatActivity()  {
     }
 
     private fun onYoutubeImageClick() {
+
         binding.btnVideo.setOnClickListener {
            if(youtubeLink == "null" || youtubeLink.isNotEmpty()){
-               val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
-               startActivity(intent)
+//               val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
+//               startActivity(intent)
+               countYoutube ++
+               if(countYoutube % 2 != 0){
+                   binding.youtubePlayer.visibility = View.VISIBLE
+               }else {
+                   binding.youtubePlayer.visibility = View.GONE
+               }
+
+
            }
             else {
                 Toast.makeText(this,"Have error about this video",Toast.LENGTH_SHORT).show()
            }
         }
     }
-
     // get data MVVM meal
     @SuppressLint("SetTextI18n")
     private fun observerMealDetailLiveData() {
@@ -193,6 +227,10 @@ class MealActivity : AppCompatActivity()  {
         binding.tvCategory.visibility = View.VISIBLE
         binding.tvArea.visibility = View.VISIBLE
         binding.btnVideo.visibility = View.VISIBLE
+    }
+
+    override fun onPause() {
+        super.onPause()
     }
 
 }

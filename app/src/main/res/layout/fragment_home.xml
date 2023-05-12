@@ -111,12 +111,13 @@
         app:layout_constraintTop_toBottomOf="@id/rec_view_meal_popular"/>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:scrollbars="none"
             tools:listitem="@layout/category_item"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:spanCount="3"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            android:foregroundGravity="center_horizontal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv3"
             app:layout_constraintEnd_toEndOf="parent"
