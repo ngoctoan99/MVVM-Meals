@@ -1,17 +1,13 @@
 package com.example.foodapp.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.Uri
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.GestureDetector
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.motion.widget.OnSwipe
-import androidx.core.view.isVisible
-import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.foodapp.R
@@ -24,8 +20,6 @@ import com.example.foodapp.viewmodel.factory.MealViewModelFactory
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-import kotlinx.android.synthetic.main.activity_meal.youtube_player
 
 
 class MealActivity : AppCompatActivity()  {
@@ -60,19 +54,29 @@ class MealActivity : AppCompatActivity()  {
         observerMealDetailLiveData()
         setDataIngredient()
         actionClick()
-        setUpPlayerVideo()
+        setUpPlayerVideo(this)
     }
 
-    private fun setUpPlayerVideo() {
+    private fun setUpPlayerVideo(context : Context) {
         lifecycle.addObserver(binding.youtubePlayer)
         binding.youtubePlayer.getPlayerUiController()
         binding.youtubePlayer.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 // loading the selected video into the YouTube Player
-                val stringArray = youtubeLink.split("=")
-                Log.d("teststring",youtubeLink + " ////" + stringArray[1])
-                youTubePlayer.loadVideo(stringArray[1], 0F)
-                youTubePlayer.pause()
+                if(youtubeLink.isNotEmpty() ){
+                    val stringArray = youtubeLink.split("=")
+                    youTubePlayer.loadVideo(stringArray[1], 0F)
+
+                    /// pause video when start
+                    youTubePlayer.pause()
+
+                    /// action click button video
+                    onYoutubeImageClick(youTubePlayer)
+                }else {
+                    binding.btnVideo.setOnClickListener{
+                        Toast.makeText(context, "Have error about this video", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
 
             override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
@@ -89,9 +93,8 @@ class MealActivity : AppCompatActivity()  {
             binding.btnAddFavorite.visibility = View.VISIBLE
         }
     }
-    // action click three button
+    // action click two button
     private fun actionClick() {
-        onYoutubeImageClick()
         onFavoriteClick()
         onClickTranslate()
     }
@@ -110,6 +113,7 @@ class MealActivity : AppCompatActivity()  {
                main.translationLanguage(description,binding.tvDescription)
                main.translationLanguageCollap(binding.collapsingToolbar.title.toString().trim(),binding.collapsingToolbar)
            }else {
+               binding.tvDetailIngredient.text = ""
                setDataIngredient()
                observerMealDetailLiveData()
                binding.tv1.text = "Ingredient :"
@@ -121,10 +125,9 @@ class MealActivity : AppCompatActivity()  {
 
     // get data ingredient to arrange it to display
     private fun setDataIngredient() {
-
-
         // array ingredient item
        mealViewModel.observerMealDetailLiveData().observe(this){ mealToSave->
+           ingredientString = " "
            val arrayIngredient = arrayOf<String>("${mealToSave?.strIngredient1.toString()} : ${mealToSave?.strMeasure1.toString()}",
                "${mealToSave?.strIngredient2} : ${mealToSave?.strMeasure2}","${mealToSave?.strIngredient3} : ${mealToSave?.strMeasure3}",
                "${mealToSave?.strIngredient4} : ${mealToSave?.strMeasure4}","${mealToSave?.strIngredient5} : ${mealToSave?.strMeasure5}",
@@ -159,24 +162,21 @@ class MealActivity : AppCompatActivity()  {
         }
     }
 
-    private fun onYoutubeImageClick() {
+    private fun onYoutubeImageClick(youTubePlayer: YouTubePlayer) {
 
         binding.btnVideo.setOnClickListener {
-           if(youtubeLink == "null" || youtubeLink.isNotEmpty()){
 //               val intent = Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink))
 //               startActivity(intent)
                countYoutube ++
                if(countYoutube % 2 != 0){
+                   // display and play video
                    binding.youtubePlayer.visibility = View.VISIBLE
+                   youTubePlayer.play()
                }else {
+                   /// hide and pause video
                    binding.youtubePlayer.visibility = View.GONE
+                   youTubePlayer.pause()
                }
-
-
-           }
-            else {
-                Toast.makeText(this,"Have error about this video",Toast.LENGTH_SHORT).show()
-           }
         }
     }
     // get data MVVM meal
@@ -227,10 +227,6 @@ class MealActivity : AppCompatActivity()  {
         binding.tvCategory.visibility = View.VISIBLE
         binding.tvArea.visibility = View.VISIBLE
         binding.btnVideo.visibility = View.VISIBLE
-    }
-
-    override fun onPause() {
-        super.onPause()
     }
 
 }

@@ -63,13 +63,13 @@ class IngredientFragment : Fragment() {
     }
 
     private fun actionSearchIngredient() {
-        binding.btnEnter.setOnClickListener {
-            val searchQuery = binding.edSearch.text.toString().trim()
-            if(searchQuery.isNotEmpty()){
-                viewModel.searchIngredient(searchQuery)
-            }
-            observerSearchIngredient()
-        }
+//        binding.btnEnter.setOnClickListener {
+//            val searchQuery = binding.edSearch.text.toString().trim()
+//            if(searchQuery.isNotEmpty()){
+//                viewModel.searchIngredient(searchQuery)
+//            }
+//            observerSearchIngredient()
+//        }
         // automatic search
         var searchJob : Job? = null
         // automatic search text change after 500 ms

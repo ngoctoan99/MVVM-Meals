@@ -26,13 +26,13 @@
             android:background="@drawable/search_box_background"
             android:paddingEnd="15dp"
             />
-        <ImageView
-            android:id="@+id/btn_enter"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_baseline_arrow_forward_24"
-            app:tint="@color/g_gray" />
+<!--        <ImageView-->
+<!--            android:id="@+id/btn_enter"-->
+<!--            android:layout_width="@dimen/_35sdp"-->
+<!--            android:layout_height="@dimen/_35sdp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:src="@drawable/ic_baseline_arrow_forward_24"-->
+<!--            app:tint="@color/g_gray" />-->
     </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_ingredient"

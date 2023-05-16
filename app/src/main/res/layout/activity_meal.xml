@@ -30,7 +30,8 @@
                 android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="30dp"
-                android:id="@+id/youtube_player"/>
+                android:id="@+id/youtube_player">
+            </com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView>
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/tool_bar"
                 app:layout_collapseMode="pin"
