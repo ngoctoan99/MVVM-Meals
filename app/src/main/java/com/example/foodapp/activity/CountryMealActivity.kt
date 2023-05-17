@@ -27,6 +27,7 @@ class CountryMealActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCountryMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        this.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_left)
         prepareRecyclerView()
         //get name country to activity before
         countryName = intent.getStringExtra(HomeFragment.COUNTRY_NAME)!!

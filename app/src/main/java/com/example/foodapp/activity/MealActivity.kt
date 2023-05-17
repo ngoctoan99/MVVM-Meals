@@ -2,10 +2,12 @@ package com.example.foodapp.activity
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.GestureDetector
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -43,10 +45,12 @@ class MealActivity : AppCompatActivity()  {
         super.onCreate(savedInstanceState)
         binding = ActivityMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        this.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_left)
         val mealDatabase  =MealDatabase.getInstance(this)
         val viewModelFactory = MealViewModelFactory(mealDatabase)
         mealViewModel = ViewModelProvider(this,viewModelFactory)[MealViewModel::class.java]
         main = MainActivity()
+
         getMealInformationFromIntent()
         loadingCase()
         setInformationInViews()
@@ -55,6 +59,7 @@ class MealActivity : AppCompatActivity()  {
         setDataIngredient()
         actionClick()
         setUpPlayerVideo(this)
+        addAnimation()
     }
 
     private fun setUpPlayerVideo(context : Context) {
@@ -98,12 +103,32 @@ class MealActivity : AppCompatActivity()  {
         onFavoriteClick()
         onClickTranslate()
     }
+    private fun addAnimation(){
+        val ttb = AnimationUtils.loadAnimation(this,R.anim.ttb)
+        val stb =AnimationUtils.loadAnimation(this,R.anim.stb)
+        val btt =AnimationUtils.loadAnimation(this,R.anim.btt)
+        val btt2 =AnimationUtils.loadAnimation(this,R.anim.btt2)
+        val btt3 =AnimationUtils.loadAnimation(this,R.anim.btt3)
+
+        binding.btnVideo.startAnimation(btt)
+        binding.btnTranslate.startAnimation(btt2)
+        binding.btnAddFavorite.startAnimation(btt3)
+        binding.tvCategory.startAnimation(stb)
+        binding.tvArea.startAnimation(stb)
+        binding.tvDetailIngredient.startAnimation(stb)
+        binding.tvDescription.startAnimation(stb)
+        binding.tv1.startAnimation(stb)
+        binding.tv2.startAnimation(stb)
+        binding.imgMealDetail.startAnimation(ttb)
+
+    }
 
     private fun onClickTranslate() {
 
        binding.btnTranslate.setOnClickListener{
            Log.d("datatranslate",ingredientString)
            count ++
+
            if(count % 2 != 0){
                main.translationLanguage(binding.tvCategory.text.toString().trim(),binding.tvCategory)
                main.translationLanguage(binding.tvArea.text.toString().trim(),binding.tvArea)
@@ -112,6 +137,7 @@ class MealActivity : AppCompatActivity()  {
                main.translationLanguage(ingredientString,binding.tvDetailIngredient)
                main.translationLanguage(description,binding.tvDescription)
                main.translationLanguageCollap(binding.collapsingToolbar.title.toString().trim(),binding.collapsingToolbar)
+               addAnimationTran()
            }else {
                binding.tvDetailIngredient.text = ""
                setDataIngredient()
@@ -119,6 +145,7 @@ class MealActivity : AppCompatActivity()  {
                binding.tv1.text = "Ingredient :"
                binding.tv2.text = "Instruction :"
                setInformationInViews()
+               addAnimationTran()
            }
        }
     }
@@ -152,7 +179,15 @@ class MealActivity : AppCompatActivity()  {
        }
 
     }
-
+    private fun addAnimationTran(){
+        val stb =AnimationUtils.loadAnimation(this,R.anim.stb)
+        binding.tvCategory.startAnimation(stb)
+        binding.tvArea.startAnimation(stb)
+        binding.tv1.startAnimation(stb)
+        binding.tv2.startAnimation(stb)
+        binding.tvDetailIngredient.startAnimation(stb)
+        binding.tvDescription.startAnimation(stb)
+    }
     private fun onFavoriteClick() {
         binding.btnAddFavorite.setOnClickListener {
             mealToSave?.let {
@@ -170,10 +205,14 @@ class MealActivity : AppCompatActivity()  {
                countYoutube ++
                if(countYoutube % 2 != 0){
                    // display and play video
+                   val ttb = AnimationUtils.loadAnimation(this,R.anim.ttb)
                    binding.youtubePlayer.visibility = View.VISIBLE
+                   binding.youtubePlayer.startAnimation(ttb)
                    youTubePlayer.play()
                }else {
                    /// hide and pause video
+                   val ttb1 = AnimationUtils.loadAnimation(this,R.anim.ttb1)
+                   binding.youtubePlayer.startAnimation(ttb1)
                    binding.youtubePlayer.visibility = View.GONE
                    youTubePlayer.pause()
                }
@@ -227,6 +266,10 @@ class MealActivity : AppCompatActivity()  {
         binding.tvCategory.visibility = View.VISIBLE
         binding.tvArea.visibility = View.VISIBLE
         binding.btnVideo.visibility = View.VISIBLE
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 
 }

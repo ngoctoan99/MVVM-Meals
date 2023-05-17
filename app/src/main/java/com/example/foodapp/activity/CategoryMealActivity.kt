@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -20,26 +21,38 @@ class CategoryMealActivity : AppCompatActivity() {
     private lateinit var binding : ActivityCategoryMealBinding
     private lateinit var categoryMealsViewModel : CategoryMealsViewModel
     private lateinit var categoryName : String
+    private lateinit var intentString : String
     private lateinit var categoryMealsAdapter : CategoryMealsAdapter
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCategoryMealBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        this.overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_left)
         prepareRecyclerView()
         categoryName = intent.getStringExtra(HomeFragment.CATEGORY_NAME)!!
+
 
         // instance categoryMealsViewModel
         categoryMealsViewModel = ViewModelProviders.of(this)[CategoryMealsViewModel::class.java]
         categoryMealsViewModel.getMealsByCategory(categoryName)
 
-        // get data MVVM categoy
-        categoryMealsViewModel.observerMealsLiveData().observe(this, Observer {mealList ->
-           categoryMealsAdapter.setMealList(mealList)
-            binding.tvCategoryCount.text = "$categoryName : ${mealList.size}"
-        })
+        // get data MVVM category meal
+        observeCategoryMealData()
         onClickCategoryMeal()
     }
+
+    private fun observeCategoryMealData() {
+        binding.rvMeals.visibility = View.GONE
+        binding.isLoading.visibility = View.VISIBLE
+        categoryMealsViewModel.observerMealsLiveData().observe(this, Observer {mealList ->
+            categoryMealsAdapter.setMealList(mealList)
+            binding.rvMeals.visibility = View.VISIBLE
+            binding.isLoading.visibility = View.GONE
+            binding.tvCategoryCount.text = "$categoryName : ${mealList.size}"
+        })
+    }
+
     // set up recyclerview
     private fun prepareRecyclerView() {
         categoryMealsAdapter = CategoryMealsAdapter()
@@ -58,4 +71,5 @@ class CategoryMealActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
 }

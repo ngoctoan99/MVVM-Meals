@@ -1,5 +1,6 @@
 package com.example.foodapp.fragment
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -142,6 +143,7 @@ class HomeFragment : Fragment() {
 
     private fun onRanDomMealClick() {
         binding.randomMealCard.setOnClickListener {
+            val option  =ActivityOptions.makeSceneTransitionAnimation(requireActivity(),binding.randomMealCard,"random")
             val intent = Intent(activity,MealActivity::class.java)
             intent.putExtra(MEAL_ID,randomMeal.idMeal)
             intent.putExtra(MEAL_NAME,randomMeal.strMeal)
